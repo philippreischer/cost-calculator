@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kalkulation</title>
+        <link rel="stylesheet" href="./dist/output.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="min-h-screen bg-bg font-['DM_Sans',sans-serif] text-text">
+    
+        <!-- NAVBAR                         -->
+        <nav id="navbar" class="sticky top-0 z-30 bg-surface border-b border-border shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+            <div class="max-w-[1280px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+        
+                <!-- Brand -->
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">K</div>
+                    <h1 class="text-[17px] font-semibold text-text hidden sm:block">Kalkulation</h1>
+                </div>
+            
+                <!-- Column count input -->
+                <div class="flex items-center gap-2">
+                    <label for="column-count" class="text-[13px] text-text/60 hidden md:block">Spalten:</label>
+                    <input
+                    id="column-count"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="1"
+                    class="w-[60px] px-2 py-1.5 border border-border rounded-md text-center text-sm text-text bg-white
+                            focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
+                    >
+                </div>
+            
+                <!-- Drawer toggle -->
+                <button
+                    id="drawer-toggle"
+                    type="button"
+                    class="flex items-center gap-2 px-3 py-1.5 bg-primary hover:bg-primary/85 text-white rounded-md text-sm font-medium transition cursor-pointer"
+                >
+                    <!-- Hamburger icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <span class="hidden sm:inline">Zeilen</span>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- DRAWER OVERLAY (mobile) -->
+        <div
+            id="drawer-overlay"
+            class="fixed inset-0 bg-black/30 z-40 hidden transition-opacity"
+        ></div>
+        
+        <!-- DRAWER -->
+
+        <aside
+            id="drawer"
+            class="fixed z-50 bg-surface border border-border shadow-lg
+                transition-transform duration-300 ease-in-out
+        
+                /* Mobile: full-width panel from top */
+                top-[57px] left-0 right-0
+                -translate-y-[calc(100%+57px)]
+                rounded-b-xl
+        
+                /* Desktop: right sidebar */
+                lg:top-0 lg:left-auto lg:right-0 lg:bottom-0
+                lg:w-[280px] lg:rounded-none lg:rounded-l-xl
+                lg:translate-y-0 lg:translate-x-full"
+        >
+            <!-- Drawer header -->
+            <div class="px-4 py-3 border-b border-border flex items-center justify-between">
+            <h3 class="font-semibold text-[15px] text-text">Zeilen ein-/ausblenden</h3>
+            <button
+                id="drawer-close"
+                type="button"
+                class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-bg text-text/50 hover:text-text transition cursor-pointer"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            </div>
+        
+            <!-- Row toggles -->
+            <div id="row-toggles" class="p-3 space-y-0.5">
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="quantity" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Menge</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="price" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Preis</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="discount1" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Rabatt 1</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="discounted-price-1" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Rabattierter Preis 1</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="discount2" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Rabatt 2</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="discounted-price-2" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Rabattierter Preis 2</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="discount3" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Rabatt 3</span>
+            </label>
+            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
+                <input type="checkbox" checked data-row="result" class="w-4 h-4 accent-primary">
+                <span class="text-sm text-text">Ergebnis</span>
+            </label>
+            </div>
+        </aside>
+        
+
+        <!-- MAIN CONTENT -->
+        <main class="max-w-[1280px] mx-auto px-4 py-6">
+        
+            <form id="calc-form" class="bg-surface border border-border rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+        
+            <!-- Form header -->
+            <div class="px-5 py-3.5 border-b border-border flex items-center justify-between gap-3">
+                <h2 class="text-[15px] font-semibold text-text">Kalkulationstabelle</h2>
+                <div class="flex items-center gap-3">
+                    <button type="button" id="spread-all-discounts"
+                        style="display: inline-flex; align-items: center; gap: 6px;"
+                        class="px-4 py-1.5 text-sm bg-primary hover:bg-primary/85 text-white rounded-md font-medium transition cursor-pointer"
+                        title="Alle Rabatte aus Spalte 1 auf alle Spalten übertragen">
+                        <span>Alle Rabatte übertragen</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7"/></svg>
+                    </button>
+                    <span id="column-count-display" class="text-xs text-text/50">3 Spalten</span>
+                </div>
+            </div>
+        
+            <!-- Table (rendered dynamically by app.js) -->
+            <div class="overflow-x-auto">
+                <table id="calc-table" class="w-full text-sm">
+                <thead id="calc-thead"></thead>
+                <tbody id="calc-tbody"></tbody>
+                </table>
+            </div>
+        
+            <!-- Form footer -->
+            <div class="px-5 py-3 border-t border-border bg-bg flex justify-end gap-2">
+                <button type="reset" class="px-4 py-1.5 text-sm border border-border rounded-md text-text/70 bg-white hover:bg-bg transition cursor-pointer">
+                    Zurücksetzen
+                </button>
+                <button type="submit" class="px-4 py-1.5 text-sm bg-primary hover:bg-primary/85 text-white rounded-md font-medium transition cursor-pointer">
+                    Berechnen
+                </button>
+            </div>
+        
+            </form>
+        </main>
+    
+    <!-- JS (placeholder for your logic) -->
+    <script src="./src/app.js"></script>
+    </body>
+</html>
