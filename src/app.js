@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
     
+    
     // DOM REFERENCES
 
     const thead = document.getElementById("calc-thead");
@@ -184,8 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
         let headHtml = `<tr class="bg-bg border-b border-border">`;
         headHtml += `<th class="text-left px-4 py-2.5 font-medium text-text/50 w-[170px] min-w-[140px]">Position</th>`;
-        for (let c = 1; c <= columnCount; c++) {
-            headHtml += `<th class="text-center px-3 py-2.5 font-medium text-text/50 min-w-[100px]">Spalte ${c}</th>`;
+        for (let i = 1; i <= columnCount; i++) {
+            headHtml += `<th class="text-center px-3 py-2.5 font-medium text-text/50 min-w-[100px]">Spalte ${i}</th>`;
         }
         headHtml += `</tr>`;
         thead.innerHTML = headHtml;
@@ -369,35 +370,47 @@ document.addEventListener("DOMContentLoaded", () => {
         saveRowVisibility();
     });
 });
-/*
-const form = document.getElementById("calc-form");
-const columns = {};
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
 
-    const count = parseInt(document.getElementById("column-count").value, 10);
-    //const columns = {};
+    const form = document.getElementById("calc-form");
+    const columns = {};
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    for (let i = 1; i <= count; i++) {
-        columns[i] = {
-        quantity:  parseFloat(form.elements[`quantity_${i}`].value) || 0,
-        price:     parseFloat(form.elements[`price_${i}`].value) || 0,
-        discount1: parseFloat(form.elements[`discount1_${i}`].value) || 0,
-        discount2: parseFloat(form.elements[`discount2_${i}`].value) || 0,
-        discount3: parseFloat(form.elements[`discount3_${i}`].value) || 0,
-        };
-        console.log(columns[i]);
-        calculatePrice(columns[i].quantity, columns[i].price, columns[i].discount1, columns[i].discount2, columns[i].discount3);
+        const count = parseInt(document.getElementById("column-count").value, 10);
+        //const columns = {};
+
+        for (let i = 1; i <= count; i++) {
+            columns[i] = {
+            quantity:  parseFloat(form.elements[`quantity_${i}`].value) || 0,
+            price:     parseFloat(form.elements[`price_${i}`].value) || 0,
+            discount1: parseFloat(form.elements[`discount1_${i}`].value) || 0,
+            discount2: parseFloat(form.elements[`discount2_${i}`].value) || 0,
+            discount3: parseFloat(form.elements[`discount3_${i}`].value) || 0,
+            };
+            console.log(columns[i]);
+            calculatePrice(columns[i].quantity, columns[i].price, columns[i].discount1, columns[i].discount2, columns[i].discount3);
+        }
+    });
+
+    const results = {
+        discountedPrice1: 0,
+        discountedPrice2: 0,
+        result: 0
+    };
+    console.log(results)
+    function calculatePrice(quantity, price, discount1, discount2, discount3){
+        let subtotal = price;
+        subtotal = calculateDiscountedPrice(quantity, subtotal, discount1);
+        results.discountedPrice1 = subtotal;
+        console.log(subtotal);
+        subtotal = calculateDiscountedPrice(quantity, subtotal, discount2);
+        results.discountedPrice2 = subtotal;
+        console.log(subtotal);
+        subtotal = calculateDiscountedPrice(quantity, subtotal, discount3);
+        results.result = subtotal;
+        console.log(subtotal);
     }
-});
-function calculatePrice(quantity, price, discount1, discount2, discount3){
-    calculateDiscountedPrice(quantity, price, discount1);
-    calculateDiscountedPrice(quantity, price, discount2);
-    calculateDiscountedPrice(quantity, price, discount3);
-}
-
-function calculateDiscountedPrice(quantity, price, discount){
-
-
-}
-*/
+    console.log(results);
+    function calculateDiscountedPrice(quantity, price, discount){ 
+        return parseFloat(price /100 *(100 - discount)).toFixed(2);
+    }
