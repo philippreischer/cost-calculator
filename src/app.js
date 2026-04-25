@@ -1,5 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
  
+    function el(tag, props = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+        if (k === 'class') node.className = v;
+        else node.setAttribute(k, v);
+    }
+    for (const child of children) {
+        node.append(typeof child === 'string' ? document.createTextNode(child) : child);
+    }
+    return node;
+    }
+    
   // ROW CONFIGURATION
     const ROW_CONFIG = [
         {
@@ -110,7 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
     
-    
+    const results = {
+        discountedPrice1: 0,
+        discountedPrice2: 0,
+        result: 0
+    };
+
     // DOM REFERENCES
 
     const thead = document.getElementById("calc-thead");
@@ -176,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // RENDER TABLE
-
+/*
     function renderTable(columnCount) {
         
         const saved = tbody.children.length > 0 ? saveValues() : null;
@@ -201,6 +218,17 @@ document.addEventListener("DOMContentLoaded", () => {
         let bodyHtml = "";
         for (const row of ROW_CONFIG) {
             const hiddenClass = hiddenRows.has(row.id) ? " hidden" : "";
+
+            
+            //const trBodyTableElement = document.createElement('tr');
+            //trBodyTableElement.attribute('id', `row-${row.id}`);
+            //trBodyTableElement.attribute('class', `${row.trClass}${hiddenClass}">`);
+            //tbody.append(trBodyTableElement);
+
+            //const tdRow = document.createElement('td');
+           
+            
+
             bodyHtml += `<tr id="row-${row.id}" class="${row.trClass}${hiddenClass}">`;
 
             if (row.spreadable) {
@@ -222,7 +250,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const inputName = `${row.name}_${i}`;
             const stepAttr = row.step ? ` step="${row.step}"` : "";
             const readonlyAttr = row.readonly ? " readonly" : "";
-            const placeholder = row.readonly ? ` placeholder="—"` : "";
+            const resultes = row.readonly ? ` placeholder="—"` : ` placeholder="—"` ;
+            const placeholder = row.readonly ? ` ${resultes}` : "";
+            //const placeholder = row.readonly ? ` placeholder="—"` : "";
             const valueAttr = row.defaultValue ? ` value="${row.defaultValue}"` : "";
     
             bodyHtml += `<td class="px-2 py-1.5">`;
@@ -236,8 +266,93 @@ document.addEventListener("DOMContentLoaded", () => {
     
         restoreValues(saved);
     }
+*/         
     
-    // Restore column count from localStorage on page load
+    function renderTable(columnCount) {
+        const svgNS = 'http://www.w3.org/2000/svg';
+
+        const saved = tbody.children.length > 0 ? saveValues() : null;
+
+        columnDisplay.textContent = `${columnCount} Spalte${columnCount === 1 ? '' : 'n'}`;
+
+        // --- Thead ---
+        const headTr = el('tr', { class: 'bg-bg border-b border-border' },
+            el('th', { class: 'text-left px-4 py-2.5 font-medium text-text/50 w-[170px] min-w-[140px]' }, 'Position')
+        );
+        for (let i = 1; i <= columnCount; i++) {
+            headTr.appendChild(
+                el('th', { class: 'text-center px-3 py-2.5 font-medium text-text/50 min-w-[100px]' }, `Spalte ${i}`)
+            );
+        }
+        thead.innerHTML = '';
+        thead.appendChild(headTr);
+
+        // --- Tbody ---
+        const hiddenRows = new Set();
+        document.querySelectorAll("#row-toggles input[type='checkbox']").forEach(cb => {
+            if (!cb.checked) hiddenRows.add(cb.dataset.row);
+        });
+
+        tbody.innerHTML = '';
+
+        for (const row of ROW_CONFIG) {
+            const hiddenClass = hiddenRows.has(row.id) ? ' hidden' : '';
+
+            // Label-Spalte
+            let labelTd;
+            if (row.spreadable) {
+                const svg = document.createElementNS(svgNS, 'svg');
+                svg.setAttribute('class', 'w-3.5 h-3.5');
+                svg.setAttribute('fill', 'none');
+                svg.setAttribute('viewBox', '0 0 24 24');
+                svg.setAttribute('stroke', 'currentColor');
+                svg.setAttribute('stroke-width', '2.5');
+                const path = document.createElementNS(svgNS, 'path');
+                path.setAttribute('stroke-linecap', 'round');
+                path.setAttribute('stroke-linejoin', 'round');
+                path.setAttribute('d', 'M13 5l7 7-7 7');
+                svg.appendChild(path);
+
+                labelTd = el('td', { class: row.labelClass },
+                    el('div', { class: 'flex items-center justify-between gap-1' },
+                        el('span', {}, row.label),
+                        el('button', {
+                            type: 'button',
+                            'data-spread': row.name,
+                            class: 'spread-btn flex items-center justify-center w-7 h-7 rounded hover:bg-primary/10 text-primary transition cursor-pointer',
+                            title: `${row.label} aus Spalte 1 übertragen`,
+                        }, svg)
+                    )
+                );
+            } else {
+                labelTd = el('td', { class: row.labelClass }, row.label);
+            }
+
+            const tr = el('tr', { id: `row-${row.id}`, class: `${row.trClass}${hiddenClass}` }, labelTd);
+
+            // Input-Spalten
+            for (let i = 1; i <= columnCount; i++) {
+                const input = document.createElement('input');
+                input.type = row.type;
+                input.name = `${row.name}_${i}`;
+                input.className = row.inputClass;
+                console.log(row.readonly)
+                input.placeholder = row.readonly? '—': "";
+                if (row.step)         input.setAttribute('step', row.step);
+                if (row.readonly)     input.readOnly = true;
+                if (row.defaultValue) input.value = row.defaultValue;
+                
+
+                tr.appendChild(el('td', { class: 'px-2 py-1.5' }, input));
+            }
+
+            tbody.appendChild(tr);
+        }
+
+        restoreValues(saved);
+    }
+
+// Restore column count from localStorage on page load
     const storedData = (() => {
         try { 
             return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; 
@@ -369,9 +484,8 @@ document.addEventListener("DOMContentLoaded", () => {
         row.classList.toggle("hidden", !e.target.checked);
         saveRowVisibility();
     });
-});
 
-    const form = document.getElementById("calc-form");
+
     const columns = {};
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -392,25 +506,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const results = {
-        discountedPrice1: 0,
-        discountedPrice2: 0,
-        result: 0
-    };
     console.log(results)
     function calculatePrice(quantity, price, discount1, discount2, discount3){
         let subtotal = price;
-        subtotal = calculateDiscountedPrice(quantity, subtotal, discount1);
-        results.discountedPrice1 = subtotal;
-        console.log(subtotal);
-        subtotal = calculateDiscountedPrice(quantity, subtotal, discount2);
-        results.discountedPrice2 = subtotal;
-        console.log(subtotal);
-        subtotal = calculateDiscountedPrice(quantity, subtotal, discount3);
-        results.result = subtotal;
-        console.log(subtotal);
+        subtotal = calculateDiscountedPrice(subtotal, discount1);
+        results.discountedPrice1 = subtotal*quantity;
+        console.log(results.discountedPrice1);
+        subtotal = calculateDiscountedPrice(subtotal, discount2);
+        results.discountedPrice2 = subtotal*quantity;
+        console.log(results.discountedPrice2);
+        subtotal = calculateDiscountedPrice(subtotal, discount3);
+        results.result = subtotal*quantity;
+        console.log(results.result);
     }
     console.log(results);
-    function calculateDiscountedPrice(quantity, price, discount){ 
-        return parseFloat(price /100 *(100 - discount)).toFixed(2);
+    function calculateDiscountedPrice(price, discount){ 
+        return parseFloat((price /100 *(100 - discount))).toFixed(2);
     }
+});
