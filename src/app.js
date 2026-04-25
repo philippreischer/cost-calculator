@@ -379,13 +379,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     // FORMAT PRICES (2 decimal places)
-    document.addEventListener("blur", (e) => {
+ /*   document.addEventListener("blur", (e) => {
         if (e.target.name && e.target.name.startsWith("price_")) {
             const val = parseFloat(e.target.value);
             if (!isNaN(val)) {
                 e.target.value = val.toFixed(2);
             }
         }
+    }, true);
+*/
+    document.addEventListener("blur", (e) => {
+    if (e.target.name && (e.target.readOnly || e.target.name.startsWith("price_"))) {
+        const val = parseFloat(e.target.value);
+        if (!isNaN(val)) {
+            e.target.value = val.toFixed(2);
+        }
+    }
     }, true);
     
     // RESET – also clear localStorage
@@ -503,6 +512,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             console.log(columns[i]);
             calculatePrice(columns[i].quantity, columns[i].price, columns[i].discount1, columns[i].discount2, columns[i].discount3);
+            
+            form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`result_${i}`].value = results.result.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     });
 
@@ -519,8 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
         results.result = subtotal*quantity;
         console.log(results.result);
     }
+    
     console.log(results);
     function calculateDiscountedPrice(price, discount){ 
-        return parseFloat((price /100 *(100 - discount))).toFixed(2);
+        return parseFloat((price / 100 * (100 - discount)).toFixed(2));
     }
 });
