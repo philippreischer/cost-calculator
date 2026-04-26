@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.placeholder = row.readonly? '—': "";
                 if (row.step)         input.setAttribute('step', row.step);
                 if (row.readonly)     input.readOnly = true;
-                if (row.defaultValue) input.value = row.defaultValue;
+                if (row.defaultValue) input.setAttribute('value', row.defaultValue);
                 
 
                 tr.appendChild(el('td', { class: 'px-2 py-1.5' }, input));
@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calc-form").addEventListener("reset", () => {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(ROW_VISIBILITY_KEY);
-        console.log("Test")
+        renderTable(parseInt(columnInput.value, 10) || 1);
         
         
     });
