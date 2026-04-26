@@ -109,6 +109,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
         },
         {
+        id: "discounted-price-3",
+        label: "Rab. Preis 3",
+        name: "discountedPrice3",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
         id: "result",
         label: "Ergebnis",
         name: "result",
@@ -125,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const results = {
         discountedPrice1: 0,
         discountedPrice2: 0,
+        discountedPrice3: 0,
         result: 0
     };
 
@@ -336,7 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.type = row.type;
                 input.name = `${row.name}_${i}`;
                 input.className = row.inputClass;
-                console.log(row.readonly)
                 input.placeholder = row.readonly? '—': "";
                 if (row.step)         input.setAttribute('step', row.step);
                 if (row.readonly)     input.readOnly = true;
@@ -401,6 +413,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calc-form").addEventListener("reset", () => {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(ROW_VISIBILITY_KEY);
+        console.log("Test")
+        
+        
     });
     
     // SPREAD DISCOUNT – single row & batch
@@ -515,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`result_${i}`].value = results.result.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     });
@@ -529,6 +545,8 @@ document.addEventListener("DOMContentLoaded", () => {
         results.discountedPrice2 = subtotal*quantity;
         console.log(results.discountedPrice2);
         subtotal = calculateDiscountedPrice(subtotal, discount3);
+        results.discountedPrice3 = subtotal*quantity;
+        console.log(results.discountedPrice3);
         results.result = subtotal*quantity;
         console.log(results.result);
     }
