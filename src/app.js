@@ -43,6 +43,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
         },
         {
+        id: "purchase-price",
+        label: "Einkaufspreis (€)",
+        name: "purchasePrice",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
         id: "discount1",
         label: "Rabatt 1 (%)",
         name: "discount1",
@@ -135,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     
     const results = {
+        purchasePrice: 0,
         discountedPrice1: 0,
         discountedPrice2: 0,
         discountedPrice3: 0,
@@ -528,6 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(columns[i]);
             calculatePrice(columns[i].quantity, columns[i].price, columns[i].discount1, columns[i].discount2, columns[i].discount3);
             
+            form.elements[`purchasePrice_${i}`].value = results.purchasePrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -538,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(results)
     function calculatePrice(quantity, price, discount1, discount2, discount3){
         let subtotal = price;
+        results.purchasePrice = subtotal*quantity;
         subtotal = calculateDiscountedPrice(subtotal, discount1);
         results.discountedPrice1 = subtotal*quantity;
         console.log(results.discountedPrice1);
