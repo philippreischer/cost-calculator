@@ -43,6 +43,32 @@ document.addEventListener("DOMContentLoaded", () => {
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
         },
         {
+        id: "purchase-price-incl-tax",
+        label: "Einkaufspreis inkl. Ust",
+        name: "purchasePriceInclTax",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "purchase-tax",
+        label: "USt. (%)",
+        name: "purchaseTax",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
         id: "purchase-price",
         label: "Einkaufspreis (€)",
         name: "purchasePrice",
@@ -147,10 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     
     const results = {
+        purchasePriceInclTax: 0,
         purchasePrice: 0,
         discountedPrice1: 0,
         discountedPrice2: 0,
-        discountedPrice3: 0,
+        discountedPrice3: 0, 
         result: 0
     };
 
@@ -219,81 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // RENDER TABLE
-/*
-    function renderTable(columnCount) {
-        
-        const saved = tbody.children.length > 0 ? saveValues() : null;
-    
-        columnDisplay.textContent = `${columnCount} Spalte${columnCount === 1 ? "" : "n"}`;
-    
-        let headHtml = `<tr class="bg-bg border-b border-border">`;
-        headHtml += `<th class="text-left px-4 py-2.5 font-medium text-text/50 w-[170px] min-w-[140px]">Position</th>`;
-        for (let i = 1; i <= columnCount; i++) {
-            headHtml += `<th class="text-center px-3 py-2.5 font-medium text-text/50 min-w-[100px]">Spalte ${i}</th>`;
-        }
-        headHtml += `</tr>`;
-        thead.innerHTML = headHtml;
-        
-        // --- Tbody ---
-        // Check which rows are currently hidden via drawer toggles
-        const hiddenRows = new Set();
-        document.querySelectorAll("#row-toggles input[type='checkbox']").forEach((cb) => {
-        if (!cb.checked) hiddenRows.add(cb.dataset.row);
-        });
-    
-        let bodyHtml = "";
-        for (const row of ROW_CONFIG) {
-            const hiddenClass = hiddenRows.has(row.id) ? " hidden" : "";
-
-            
-            //const trBodyTableElement = document.createElement('tr');
-            //trBodyTableElement.attribute('id', `row-${row.id}`);
-            //trBodyTableElement.attribute('class', `${row.trClass}${hiddenClass}">`);
-            //tbody.append(trBodyTableElement);
-
-            //const tdRow = document.createElement('td');
-           
-            
-
-            bodyHtml += `<tr id="row-${row.id}" class="${row.trClass}${hiddenClass}">`;
-
-            if (row.spreadable) {
-                bodyHtml += `<td class="${row.labelClass}">`;
-                bodyHtml += `<div class="flex items-center justify-between gap-1">`;
-                bodyHtml += `<span>${row.label}</span>`;
-                bodyHtml += `<button type="button" data-spread="${row.name}" class="spread-btn flex items-center justify-center w-7 h-7 
-                                rounded hover:bg-primary/10 text-primary transition cursor-pointer" title="${row.label} aus Spalte 1 übertragen">`;
-                bodyHtml += `<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
-                                stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7"/></svg>`;
-                bodyHtml += `</button>`;
-                bodyHtml += `</div>`;
-                bodyHtml += `</td>`;
-            } else {
-                bodyHtml += `<td class="${row.labelClass}">${row.label}</td>`;
-            }
-
-            for (let i = 1; i <= columnCount; i++) {
-            const inputName = `${row.name}_${i}`;
-            const stepAttr = row.step ? ` step="${row.step}"` : "";
-            const readonlyAttr = row.readonly ? " readonly" : "";
-            const resultes = row.readonly ? ` placeholder="—"` : ` placeholder="—"` ;
-            const placeholder = row.readonly ? ` ${resultes}` : "";
-            //const placeholder = row.readonly ? ` placeholder="—"` : "";
-            const valueAttr = row.defaultValue ? ` value="${row.defaultValue}"` : "";
-    
-            bodyHtml += `<td class="px-2 py-1.5">`;
-            bodyHtml += `<input type="${row.type}" name="${inputName}"${stepAttr}${readonlyAttr}${placeholder}${valueAttr} class="${row.inputClass}">`;
-            bodyHtml += `</td>`;
-            }
-            
-        bodyHtml += `</tr>`;
-        }
-        tbody.innerHTML = bodyHtml;
-    
-        restoreValues(saved);
-    }
-*/         
-    
+   
     function renderTable(columnCount) {
         const svgNS = 'http://www.w3.org/2000/svg';
 
@@ -404,15 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     // FORMAT PRICES (2 decimal places)
- /*   document.addEventListener("blur", (e) => {
-        if (e.target.name && e.target.name.startsWith("price_")) {
-            const val = parseFloat(e.target.value);
-            if (!isNaN(val)) {
-                e.target.value = val.toFixed(2);
-            }
-        }
-    }, true);
-*/
+
     document.addEventListener("blur", (e) => {
     if (e.target.name && (e.target.readOnly || e.target.name.startsWith("price_"))) {
         const val = parseFloat(e.target.value);
@@ -534,13 +479,15 @@ document.addEventListener("DOMContentLoaded", () => {
             columns[i] = {
             quantity:  parseFloat(form.elements[`quantity_${i}`].value) || 0,
             price:     parseFloat(form.elements[`price_${i}`].value) || 0,
+            purchaseTax: parseFloat(form.elements[`purchaseTax_${i}`].value) || 0,
             discount1: parseFloat(form.elements[`discount1_${i}`].value) || 0,
             discount2: parseFloat(form.elements[`discount2_${i}`].value) || 0,
             discount3: parseFloat(form.elements[`discount3_${i}`].value) || 0,
             };
             console.log(columns[i]);
-            calculatePrice(columns[i].quantity, columns[i].price, columns[i].discount1, columns[i].discount2, columns[i].discount3);
+            calculatePrice(columns[i].quantity, columns[i].price, columns[i].purchaseTax, columns[i].discount1, columns[i].discount2, columns[i].discount3);
             
+            form.elements[`purchasePriceInclTax_${i}`].value = results.purchasePriceInclTax.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`purchasePrice_${i}`].value = results.purchasePrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -550,9 +497,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(results)
-    function calculatePrice(quantity, price, discount1, discount2, discount3){
+    function calculatePrice(quantity, price, purchaseTax, discount1, discount2, discount3){
         let subtotal = price;
+        results.purchasePriceInclTax = subtotal*quantity;
+        console.log(results.purchasePriceInclTax);
+
+        subtotal = calculatePurchasePrice(subtotal, purchaseTax);
+        
+        
         results.purchasePrice = subtotal*quantity;
+
+        console.log(results.purchasePriceInclTax);
+
         subtotal = calculateDiscountedPrice(subtotal, discount1);
         results.discountedPrice1 = subtotal*quantity;
         console.log(results.discountedPrice1);
@@ -565,9 +521,15 @@ document.addEventListener("DOMContentLoaded", () => {
         results.result = subtotal*quantity;
         console.log(results.result);
     }
+
+    function calculatePurchasePrice(price, purchaseTax){ 
+        return parseFloat((price / (100 + purchaseTax) * 100).toFixed(2));
+    }
     
     console.log(results);
     function calculateDiscountedPrice(price, discount){ 
         return parseFloat((price / 100 * (100 - discount)).toFixed(2));
     }
+
+    
 });
