@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         discountedPrice1: 0,
         discountedPrice2: 0,
         discountedPrice3: 0, 
+        targetPrice: 0,
         result: 0
     };
 
@@ -30,64 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.getElementById("calc-tbody");
     const columnInput = document.getElementById("column-count");
     const columnDisplay = document.getElementById("column-count-display");
-/*    
-    // LOCAL STORAGE – save & restore values
-
-    const STORAGE_KEY = "calcAppValues";
-    const ROW_VISIBILITY_KEY = "calcAppRowVisibility";
-    
-    function saveValues() {
-        const inputs = tbody.querySelectorAll("input");
-        const saved = {};
-        inputs.forEach((input) => {
-            if (input.value !== "") {
-                saved[input.name] = input.value;
-            }
-        });
-        saved._columnCount = columnInput.value;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-        return saved;
-    }
-    
-    function restoreValues(saved) {
-        if (!saved) {
-        try {
-            saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-        } catch {
-            saved = {};
-        }
-        }
-        const inputs = tbody.querySelectorAll("input");
-        inputs.forEach((input) => {
-            if (saved[input.name] !== undefined) {
-                input.value = saved[input.name];
-            }
-        });
-    }
-    
-    function saveRowVisibility() {
-        const visibility = {};
-        document.querySelectorAll("#row-toggles input[type='checkbox']").forEach((cb) => {
-            visibility[cb.dataset.row] = cb.checked;
-        });
-        localStorage.setItem(ROW_VISIBILITY_KEY, JSON.stringify(visibility));
-    }
-    
-    function restoreRowVisibility() {
-        try {
-            const visibility = JSON.parse(localStorage.getItem(ROW_VISIBILITY_KEY));
-            if (!visibility) return;
-            document.querySelectorAll("#row-toggles input[type='checkbox']").forEach((cb) => {
-                const rowId = cb.dataset.row;
-                if (visibility[rowId] !== undefined) {
-                    cb.checked = visibility[rowId];
-                }
-            });
-        } catch {
-        // no saved visibility
-        }
-    }
-*/   
+ 
     // RENDER TABLE
    
     function renderTable(columnCount) {
@@ -326,21 +270,32 @@ document.addEventListener("DOMContentLoaded", () => {
             discount1: parseFloat(form.elements[`discount1_${i}`].value) || 0,
             discount2: parseFloat(form.elements[`discount2_${i}`].value) || 0,
             discount3: parseFloat(form.elements[`discount3_${i}`].value) || 0,
+            invoiceExpenses: parseFloat(form.elements[`invoiceExpenses_${i}`].value) || 0,
             };
             console.log(columns[i]);
-            calculatePrice(columns[i].quantity, columns[i].price, columns[i].purchaseTax, columns[i].discount1, columns[i].discount2, columns[i].discount3);
+            
+            calculatePrice(
+                columns[i].quantity, 
+                columns[i].price, 
+                columns[i].purchaseTax, 
+                columns[i].discount1, 
+                columns[i].discount2, 
+                columns[i].discount3, 
+                columns[i].invoiceExpenses
+            );
             
             form.elements[`purchasePriceInclTax_${i}`].value = results.purchasePriceInclTax.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`purchasePrice_${i}`].value = results.purchasePrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`targetPrice_${i}`].value = results.targetPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`result_${i}`].value = results.result.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     });
 
     console.log(results)
-    function calculatePrice(quantity, price, purchaseTax, discount1, discount2, discount3){
+    function calculatePrice(quantity, price, purchaseTax, discount1, discount2, discount3, invoiceExpenses){
         let subtotal = price;
         results.purchasePriceInclTax = subtotal*quantity;
         console.log(results.purchasePriceInclTax);
@@ -361,6 +316,11 @@ document.addEventListener("DOMContentLoaded", () => {
         subtotal = calculateDiscountedPrice(subtotal, discount3);
         results.discountedPrice3 = subtotal*quantity;
         console.log(results.discountedPrice3);
+        
+        subtotal = addExpenses(subtotal, invoiceExpenses, quantity);
+        results.targetPrice = subtotal*quantity;   
+        console.log(results.targetPrice);
+
         results.result = subtotal*quantity;
         console.log(results.result);
     }
@@ -369,10 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return parseFloat((price / (100 + purchaseTax) * 100).toFixed(2));
     }
     
-    console.log(results);
     function calculateDiscountedPrice(price, discount){ 
         return parseFloat((price / 100 * (100 - discount)).toFixed(2));
     }
 
+    function addExpenses(price, invoiceExpenses, quantity){ 
+        return parseFloat((price + invoiceExpenses/quantity).toFixed(2));
+    }
     
 });
