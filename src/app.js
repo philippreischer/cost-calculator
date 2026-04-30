@@ -1,4 +1,5 @@
 import { ROW_CONFIG } from './config.js';
+import { STORAGE_KEY, ROW_VISIBILITY_KEY, saveValues, restoreValues, saveRowVisibility, restoreRowVisibility  } from './storage.js';
 
 document.addEventListener("DOMContentLoaded", () => {
  
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.getElementById("calc-tbody");
     const columnInput = document.getElementById("column-count");
     const columnDisplay = document.getElementById("column-count-display");
-    
+/*    
     // LOCAL STORAGE – save & restore values
 
     const STORAGE_KEY = "calcAppValues";
@@ -86,13 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // no saved visibility
         }
     }
-    
+*/   
     // RENDER TABLE
    
     function renderTable(columnCount) {
         const svgNS = 'http://www.w3.org/2000/svg';
 
-        const saved = tbody.children.length > 0 ? saveValues() : null;
+        const saved = tbody.children.length > 0 ? saveValues(tbody, columnInput) : null;
 
         columnDisplay.textContent = `${columnCount} Spalte${columnCount === 1 ? '' : 'n'}`;
 
@@ -169,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tbody.appendChild(tr);
         }
 
-        restoreValues(saved);
+        restoreValues(tbody, saved);
     }
 
 // Restore column count from localStorage on page load
@@ -195,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     document.getElementById("calc-form").addEventListener("input", () => {
-        saveValues();
+        saveValues(tbody, columnInput);
     });
     
     // FORMAT PRICES (2 decimal places)
@@ -235,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = form.elements[`${fieldName}_${i}`];
             if (target) target.value = sourceValue;
         }
-        saveValues();
+        saveValues(tbody, columnInput);
     }
     
     // Single row spread – delegated click on → buttons
