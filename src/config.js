@@ -197,15 +197,214 @@
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
-
-
-
-
-
-
-
-
-
+        {
+        id: "procurement-costs",
+        label: "+ Eigene Bezugskosten (€)",
+        name: "procurementCosts",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "cost-price",
+        label: "Einstandspreis (€)",
+        name: "costPrice",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "overhead-rate",
+        label: "+ Regien (%)",
+        name: "overheadRate",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "total-cost",
+        label: "Selbstkosten (€)",
+        name: "totalCost",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "profit-rate",
+        label: "+ Gewinn (%)",
+        name: "profitRate",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "cash-selling-price",
+        label: "Kassaverkaufspreis (€)",
+        name: "cashSellingPrice",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "customer-cash-discount-rate",
+        label: "+ Kundenskonto (%)",
+        name: "customerCashDiscountRate",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "target-selling-price",
+        label: "Zielverkaufspreis (€)",
+        name: "targetSellingPrice",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "customer-discount-3",
+        label: "+ Kundenrabatt 3 (%)",
+        name: "customerDiscount3",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "discounted-selling-price-2",
+        label: "Rabattierter Zielverkaufspreis 2 (€)",
+        name: "discountedSellingPrice2",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "customer-discount-2",
+        label: "+ Kundenrabatt 2 (%)",
+        name: "customerDiscount2",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "discounted-selling-price-1",
+        label: "Rabattierter Zielverkaufspreis 1 (€)",
+        name: "discountedSellingPrice1",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "customer-discount-1",
+        label: "+ Kundenrabatt 1 (%)",
+        name: "customerDiscount1",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "rrp",
+        label: "UVP (€)",
+        name: "rrp",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+        {
+        id: "vat-rate",
+        label: "+ USt. (%)",
+        name: "vatRate",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "rrp-gross",
+        label: "UVP inkl. USt. (€)",
+        name: "rrpGross",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
 
 
 
