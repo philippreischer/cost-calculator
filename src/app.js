@@ -301,23 +301,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(results.purchasePriceGross);
 
         subtotal = calculatePurchasePrice(subtotal, vatRatePurchase);
-        
-        
         results.purchasePrice = subtotal*quantity;
-
         console.log(results.purchasePrice);
 
-        subtotal = calcSupplierPrices(subtotal, supplierDiscount1);
+        subtotal = calculateSupplierPrices(subtotal, supplierDiscount1);
         results.discountedPrice1 = subtotal*quantity;
         console.log(results.discountedPrice1);
-        subtotal = calcSupplierPrices(subtotal, supplierDiscount2);
+
+        subtotal = calculateSupplierPrices(subtotal, supplierDiscount2);
         results.discountedPrice2 = subtotal*quantity;
         console.log(results.discountedPrice2);
-        subtotal = calcSupplierPrices(subtotal, supplierDiscount3);
+
+        subtotal = calculateSupplierPrices(subtotal, supplierDiscount3);
         results.discountedPrice3 = subtotal*quantity;
         console.log(results.discountedPrice3);
         
-        subtotal = calcCostPrice(subtotal, invoiceCharges, quantity);
+        subtotal = calculateCostPrice(subtotal, invoiceCharges, quantity);
         results.targetPrice = subtotal*quantity;   
         console.log(results.targetPrice);
 
@@ -325,16 +324,24 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(results.result);
     }
 
-    function calculatePurchasePrice(price, vatRatePurchase){ 
-        return parseFloat((price / (100 + vatRatePurchase) * 100).toFixed(2));
+    function calculatePurchasePrice(price, vatRate){ 
+        return parseFloat((price / (100 + vatRate) * 100).toFixed(2));
     }
     
-    function calcSupplierPrices(price, discount){ 
+    function calculateSupplierPrices(price, discount){ 
         return parseFloat((price / 100 * (100 - discount)).toFixed(2));
     }
 
-    function calcCostPrice(price, invoiceCharges, quantity){ 
-        return parseFloat((price + invoiceCharges/quantity).toFixed(2));
+    function calculateCostPrice(price, charges, quantity){ 
+        return parseFloat((price + charges/quantity).toFixed(2));
+    }
+
+    function calculateSellingPrices(price, discount){
+        return parseFloat((price / (100 - discount) * 100).toFixed(2));
+    }
+
+    function calculateVat(price, vatRate) {
+        return parseFloat((price / 100 * (100 + vatRate)).toFixed(2));
     }
     
 });
