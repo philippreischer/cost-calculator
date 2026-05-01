@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const results = {
-        purchasePriceInclTax: 0,
+        purchasePriceGross: 0,
         purchasePrice: 0,
         discountedPrice1: 0,
         discountedPrice2: 0,
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // --- Thead ---
         const headTr = el('tr', { class: 'bg-bg border-b border-border' },
-            el('th', { class: 'text-left px-4 py-2.5 font-medium text-text/50 w-[170px] min-w-[140px]' }, 'Position')
+            el('th', { style: 'width: 220px; min-width: 220px;', class: 'text-left px-4 py-2.5 font-medium text-text/50 w-[170px] min-w-[140px]' }, 'Position')
         );
         for (let i = 1; i <= columnCount; i++) {
             headTr.appendChild(
@@ -266,25 +266,25 @@ document.addEventListener("DOMContentLoaded", () => {
             columns[i] = {
             quantity:  parseFloat(form.elements[`quantity_${i}`].value) || 0,
             price:     parseFloat(form.elements[`price_${i}`].value) || 0,
-            purchaseTax: parseFloat(form.elements[`purchaseTax_${i}`].value) || 0,
-            discount1: parseFloat(form.elements[`discount1_${i}`].value) || 0,
-            discount2: parseFloat(form.elements[`discount2_${i}`].value) || 0,
-            discount3: parseFloat(form.elements[`discount3_${i}`].value) || 0,
-            invoiceExpenses: parseFloat(form.elements[`invoiceExpenses_${i}`].value) || 0,
+            vatRatePurchase: parseFloat(form.elements[`vatRatePurchase_${i}`].value) || 0,
+            supplierDiscount1: parseFloat(form.elements[`supplierDiscount1_${i}`].value) || 0,
+            supplierDiscount2: parseFloat(form.elements[`supplierDiscount2_${i}`].value) || 0,
+            supplierDiscount3: parseFloat(form.elements[`supplierDiscount3_${i}`].value) || 0,
+            invoiceCharges: parseFloat(form.elements[`invoiceCharges_${i}`].value) || 0,
             };
             console.log(columns[i]);
             
             calculatePrice(
                 columns[i].quantity, 
                 columns[i].price, 
-                columns[i].purchaseTax, 
-                columns[i].discount1, 
-                columns[i].discount2, 
-                columns[i].discount3, 
-                columns[i].invoiceExpenses
+                columns[i].vatRatePurchase, 
+                columns[i].supplierDiscount1, 
+                columns[i].supplierDiscount2, 
+                columns[i].supplierDiscount3, 
+                columns[i].invoiceCharges
             );
             
-            form.elements[`purchasePriceInclTax_${i}`].value = results.purchasePriceInclTax.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`purchasePriceGross_${i}`].value = results.purchasePriceGross.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`purchasePrice_${i}`].value = results.purchasePrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice1_${i}`].value = results.discountedPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -295,29 +295,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(results)
-    function calculatePrice(quantity, price, purchaseTax, discount1, discount2, discount3, invoiceExpenses){
+    function calculatePrice(quantity, price, vatRatePurchase, supplierDiscount1, supplierDiscount2, supplierDiscount3, invoiceCharges){
         let subtotal = price;
-        results.purchasePriceInclTax = subtotal*quantity;
-        console.log(results.purchasePriceInclTax);
+        results.purchasePriceGross = subtotal*quantity;
+        console.log(results.purchasePriceGross);
 
-        subtotal = calculatePurchasePrice(subtotal, purchaseTax);
+        subtotal = calculatePurchasePrice(subtotal, vatRatePurchase);
         
         
         results.purchasePrice = subtotal*quantity;
 
-        console.log(results.purchasePriceInclTax);
+        console.log(results.purchasePrice);
 
-        subtotal = calculateDiscountedPrice(subtotal, discount1);
+        subtotal = calcSupplierPrices(subtotal, supplierDiscount1);
         results.discountedPrice1 = subtotal*quantity;
         console.log(results.discountedPrice1);
-        subtotal = calculateDiscountedPrice(subtotal, discount2);
+        subtotal = calcSupplierPrices(subtotal, supplierDiscount2);
         results.discountedPrice2 = subtotal*quantity;
         console.log(results.discountedPrice2);
-        subtotal = calculateDiscountedPrice(subtotal, discount3);
+        subtotal = calcSupplierPrices(subtotal, supplierDiscount3);
         results.discountedPrice3 = subtotal*quantity;
         console.log(results.discountedPrice3);
         
-        subtotal = addExpenses(subtotal, invoiceExpenses, quantity);
+        subtotal = calcCostPrice(subtotal, invoiceCharges, quantity);
         results.targetPrice = subtotal*quantity;   
         console.log(results.targetPrice);
 
@@ -325,16 +325,16 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(results.result);
     }
 
-    function calculatePurchasePrice(price, purchaseTax){ 
-        return parseFloat((price / (100 + purchaseTax) * 100).toFixed(2));
+    function calculatePurchasePrice(price, vatRatePurchase){ 
+        return parseFloat((price / (100 + vatRatePurchase) * 100).toFixed(2));
     }
     
-    function calculateDiscountedPrice(price, discount){ 
+    function calcSupplierPrices(price, discount){ 
         return parseFloat((price / 100 * (100 - discount)).toFixed(2));
     }
 
-    function addExpenses(price, invoiceExpenses, quantity){ 
-        return parseFloat((price + invoiceExpenses/quantity).toFixed(2));
+    function calcCostPrice(price, invoiceCharges, quantity){ 
+        return parseFloat((price + invoiceCharges/quantity).toFixed(2));
     }
     
 });

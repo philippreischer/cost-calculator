@@ -9,7 +9,7 @@
         readonly: false,
         defaultValue: "1",
         trClass: "border-b border-border/50",
-        labelClass: "px-4 py-2 font-medium text-text",
+        labelClass: "px-4 py-2 font-medium text-text label-col",
         inputClass:
             "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
@@ -29,9 +29,9 @@
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
         },
         {
-        id: "purchase-price-incl-tax",
-        label: "Einkaufspreis inkl. Ust",
-        name: "purchasePriceInclTax",
+        id: "purchase-price-gross",
+        label: "Einkaufspreis inkl. Ust (€)",
+        name: "purchasePriceGross",
         type: "text",
         step: null,
         readonly: true,
@@ -41,9 +41,9 @@
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
         {
-        id: "purchase-tax",
+        id: "vat-rate-purchase",
         label: "USt. (%)",
-        name: "purchaseTax",
+        name: "vatRatePurchase",
         type: "number",
         step: "0.01",
         readonly: false,
@@ -62,27 +62,27 @@
         step: null,
         readonly: true,
         trClass: "border-b border-border/50 bg-primary/[0.03]",
-        labelClass: "px-4 py-2 text-text/50 italic",
+        labelClass: "px-4 py-2 text-text/50 italic ",
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
         {
-        id: "discount1",
-        label: "Rabatt 1 (%)",
-        name: "discount1",
+        id: "supplier-discount1",
+        label: "Lieferantenrabatt 1 (%)",
+        name: "supplierDiscount1",
         type: "number",
         step: "0.01",
         readonly: false,
         spreadable: true,
         trClass: "border-b border-border/50",
-        labelClass: "px-4 py-2 font-medium text-text",
+        labelClass: "px-4 py-2 font-medium text-text w-50",
         inputClass:
             "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
             "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
         },
         {
         id: "discounted-price-1",
-        label: "Rab. Preis 1",
+        label: "Rabattierter Preis 1 (€)",
         name: "discountedPrice1",
         type: "text",
         step: null,
@@ -91,11 +91,11 @@
         labelClass: "px-4 py-2 text-text/50 italic",
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
-        },
+        },    
         {
-        id: "discount2",
-        label: "Rabatt 2 (%)",
-        name: "discount2",
+        id: "supplier-discount2",
+        label: "Lieferantenrabatt 2 (%)",
+        name: "supplierDiscount2",
         type: "number",
         step: "0.01",
         readonly: false,
@@ -108,7 +108,7 @@
         },
         {
         id: "discounted-price-2",
-        label: "Rab. Preis 2",
+        label: "Rabattierter Preis 2 (€)",
         name: "discountedPrice2",
         type: "text",
         step: null,
@@ -119,9 +119,9 @@
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
         {
-        id: "discount3",
-        label: "Rabatt 3 (%)",
-        name: "discount3",
+        id: "supplier-discount3",
+        label: "Lieferantenrabatt 3 (%)",
+        name: "supplierDiscount3",
         type: "number",
         step: "0.01",
         readonly: false,
@@ -134,7 +134,7 @@
         },
         {
         id: "discounted-price-3",
-        label: "Rab. Preis 3",
+        label: "Rabattierter Preis 3 (€)",
         name: "discountedPrice3",
         type: "text",
         step: null,
@@ -147,9 +147,9 @@
 
 
         {
-        id: "invoice-expenses",
+        id: "invoice-charges",
         label: "Fakturenspesen (€)",
-        name: "invoiceExpenses",
+        name: "invoiceCharges",
         type: "number",
         step: "0.01",
         readonly: false,
@@ -162,7 +162,7 @@
         },
         {
         id: "target-price",
-        label: "Zielpreis",
+        label: "Zielpreis (€)",
         name: "targetPrice",
         type: "text",
         step: null,
@@ -172,13 +172,9 @@
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
-
-
-
-
         {
         id: "result",
-        label: "Ergebnis",
+        label: "Ergebnis (€)",
         name: "result",
         type: "text",
         step: null,
