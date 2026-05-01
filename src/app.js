@@ -23,6 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
         discountedPrice3: 0, 
         targetPrice: 0,
         cashPrice: 0,
+        costPrice: 0,
+        totalCost: 0,
+        cashSellingPrice: 0,
+        targetSellingPrice: 0,
+        discountedSellingPrice2: 0,
+        discountedSellingPrice1: 0,
+        rrp: 0,
+        rrpGross: 0,
         result: 0
     };
 
