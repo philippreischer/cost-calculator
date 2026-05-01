@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         discountedPrice2: 0,
         discountedPrice3: 0, 
         targetPrice: 0,
+        cashPrice: 0,
         result: 0
     };
 
@@ -271,6 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
             supplierDiscount2: parseFloat(form.elements[`supplierDiscount2_${i}`].value) || 0,
             supplierDiscount3: parseFloat(form.elements[`supplierDiscount3_${i}`].value) || 0,
             invoiceCharges: parseFloat(form.elements[`invoiceCharges_${i}`].value) || 0,
+            supplierCashDiscount: parseFloat(form.elements[`supplierCashDiscount_${i}`].value) || 0,
             };
             console.log(columns[i]);
             
@@ -281,7 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 columns[i].supplierDiscount1, 
                 columns[i].supplierDiscount2, 
                 columns[i].supplierDiscount3, 
-                columns[i].invoiceCharges
+                columns[i].invoiceCharges,
+                columns[i].supplierCashDiscount,
             );
             
             form.elements[`purchasePriceGross_${i}`].value = results.purchasePriceGross.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -290,12 +293,16 @@ document.addEventListener("DOMContentLoaded", () => {
             form.elements[`discountedPrice2_${i}`].value = results.discountedPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`targetPrice_${i}`].value = results.targetPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`cashPrice_${i}`].value = results.cashPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
+
             form.elements[`result_${i}`].value = results.result.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     });
 
     console.log(results)
-    function calculatePrice(quantity, price, vatRatePurchase, supplierDiscount1, supplierDiscount2, supplierDiscount3, invoiceCharges){
+    function calculatePrice(quantity, price, vatRatePurchase, supplierDiscount1, supplierDiscount2, supplierDiscount3, invoiceCharges, supplierCashDiscount){
         let subtotal = price;
         results.purchasePriceGross = subtotal*quantity;
         console.log(results.purchasePriceGross);
@@ -319,6 +326,12 @@ document.addEventListener("DOMContentLoaded", () => {
         subtotal = calculateCostPrice(subtotal, invoiceCharges, quantity);
         results.targetPrice = subtotal*quantity;   
         console.log(results.targetPrice);
+
+        subtotal = calculateSupplierPrices(subtotal, supplierCashDiscount);
+        results.cashPrice = subtotal*quantity;
+        console.log(results.cashPrice);
+
+
 
         results.result = subtotal*quantity;
         console.log(results.result);

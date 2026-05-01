@@ -144,8 +144,6 @@
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
-
-
         {
         id: "invoice-charges",
         label: "Fakturenspesen (€)",
@@ -172,6 +170,45 @@
         inputClass:
             "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
         },
+
+        {
+        id: "supplier-cash-discount",
+        label: "- Lieferantenskonto (%)",
+        name: "supplierCashDiscount",
+        type: "number",
+        step: "0.01",
+        readonly: false,
+        spreadable: true,
+        trClass: "border-b border-border/50",
+        labelClass: "px-4 py-2 font-medium text-text",
+        inputClass:
+            "w-full px-2 py-1.5 border border-border rounded-md text-center text-sm bg-white " +
+            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition",
+        },
+        {
+        id: "cash-price",
+        label: "Kassapreis (€)",
+        name: "cashPrice",
+        type: "text",
+        step: null,
+        readonly: true,
+        trClass: "border-b border-border/50 bg-primary/[0.03]",
+        labelClass: "px-4 py-2 text-text/50 italic",
+        inputClass:
+            "w-full px-2 py-1.5 border border-transparent rounded-md text-center text-sm bg-transparent text-text/70",
+        },
+
+
+
+
+
+
+
+
+
+
+
+
         {
         id: "result",
         label: "Ergebnis (€)",
