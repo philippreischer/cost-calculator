@@ -70,7 +70,7 @@
         
                 /* Desktop: right sidebar */
                 lg:top-0 lg:left-auto lg:right-0 lg:bottom-0
-                lg:w-[280px] lg:rounded-none lg:rounded-l-xl
+                lg:w-[400px] lg:rounded-none lg:rounded-l-xl
                 lg:translate-y-0 lg:translate-x-full"
         >
             <!-- Drawer header -->
@@ -89,138 +89,7 @@
         
             <!-- Row toggles -->
             <div id="row-toggles" class="p-3 space-y-0.5">
-            <!--<label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="quantity" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Menge</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Preis</span>
-            </label>
-            
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="purchase-price-gross" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Einkaufspreis inkl. Ust</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="vat-rate-purchase" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">USt.</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="purchase-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Einkaufspreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="supplier-discount1" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Lieferantenrabatt 1</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="discounted-price-1" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Rabattierter Preis 1</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="supplier-discount2" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Lieferantenrabatt 2</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="discounted-price-2" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Rabattierter Preis 2</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="supplier-discount3" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Lieferantenrabatt 3</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="discounted-price-3" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Rabattierter Preis 3</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="invoice-charges" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Fakturenspesen</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="target-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Zielpreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="supplier-cash-discount" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Lieferantenskonto</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="cash-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kassapreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="procurement-costs" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Eigene Bezugskosten</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="cost-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Einstandspreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="overhead-rate" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Regien</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="total-cost" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Selbstkosten</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="profit-rate" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Gewinn</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="cash-selling-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kassaverkaufspreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="customer-cash-discount-rate" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kundenskonto</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="target-selling-price" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Zielverkaufspreis</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="customer-discount-3" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kundenrabatt 3</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="discounted-selling-price-2" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Rabattierter Zielverkaufspreis 2</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="customer-discount-2" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kundenrabatt 2</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="discounted-selling-price-1" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Rabattierter Zielverkaufspreis 1</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="customer-discount-1" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Kundenrabatt 1</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="rrp" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">UVP</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="vat-rate" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">USt.</span>
-            </label>
-            <label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="rrp-gross" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">UVP inkl. USt.</span>
-            </label>
--->
-
-            <!--<label class="flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition">
-                <input type="checkbox" checked data-row="result" class="w-4 h-4 accent-primary">
-                <span class="text-sm text-text">Ergebnis</span>
-            </label>
-            </div>-->
+          
         </aside>
         
 

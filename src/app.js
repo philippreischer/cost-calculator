@@ -33,6 +33,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const columnInput = document.getElementById("column-count");
     const columnDisplay = document.getElementById("column-count-display");
  
+
+    // RENDER TOOGELS
+
+    function renderToggles() {
+        const container = document.getElementById("row-toggles");
+        let currentGroup = null, groupDiv = null;
+        ROW_CONFIG.forEach(field => {
+            if (field.group !== currentGroup) {
+                groupDiv = document.createElement("div");
+                groupDiv.className = "flex gap-1";
+                container.appendChild(groupDiv);
+                currentGroup = field.group;
+            }
+            const label = document.createElement("label");
+            if(!field.fix ){
+                label.className = "flex items-center justify-start gap-3 px-2.5 py-2 rounded-md hover:bg-primary/5 cursor-pointer transition w-full";
+                label.innerHTML = `
+                    <input type="checkbox" checked data-row="${field.id}" class="w-4 h-4 accent-primary">
+                    <span class="text-sm text-text">${field.label}</span>
+            `;
+            }
+            groupDiv.appendChild(label);
+        });
+    }
+
     // RENDER TABLE
    
     function renderTable(columnCount) {
@@ -131,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         columnInput.value = storedData._columnCount;
     }
     
+    renderToggles();
     restoreRowVisibility();
     renderTable(parseInt(columnInput.value, 10) || 1);
     
