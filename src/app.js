@@ -307,6 +307,14 @@ document.addEventListener("DOMContentLoaded", () => {
             supplierDiscount3: parseFloat(form.elements[`supplierDiscount3_${i}`].value) || 0,
             invoiceCharges: parseFloat(form.elements[`invoiceCharges_${i}`].value) || 0,
             supplierCashDiscount: parseFloat(form.elements[`supplierCashDiscount_${i}`].value) || 0,
+            procurementCosts:  parseFloat(form.elements[`procurementCosts_${i}`].value) || 0,
+            overheadRate:  parseFloat(form.elements[`overheadRate_${i}`].value) || 0,
+            profitRate:  parseFloat(form.elements[`profitRate_${i}`].value) || 0,
+            customerCashDiscountRate:  parseFloat(form.elements[`customerCashDiscountRate_${i}`].value) || 0,
+            customerDiscount3:  parseFloat(form.elements[`customerDiscount3_${i}`].value) || 0,
+            customerDiscount2:  parseFloat(form.elements[`customerDiscount2_${i}`].value) || 0,
+            customerDiscount1:  parseFloat(form.elements[`customerDiscount1_${i}`].value) || 0,
+            vatRate:  parseFloat(form.elements[`vatRate_${i}`].value) || 0,
             };
             console.log(columns[i]);
             
@@ -319,6 +327,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 columns[i].supplierDiscount3, 
                 columns[i].invoiceCharges,
                 columns[i].supplierCashDiscount,
+                columns[i].procurementCosts,
+                columns[i].overheadRate,
+                columns[i].profitRate,
+                columns[i].customerCashDiscountRate,
+                columns[i].customerDiscount3,
+                columns[i].customerDiscount2,
+                columns[i].customerDiscount1,
+                columns[i].vatRate,
             );
             
             form.elements[`purchasePriceGross_${i}`].value = results.purchasePriceGross.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -328,9 +344,14 @@ document.addEventListener("DOMContentLoaded", () => {
             form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`targetPrice_${i}`].value = results.targetPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`cashPrice_${i}`].value = results.cashPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-
-
+            form.elements[`costPrice_${i}`].value = results.cashPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`totalCost_${i}`].value = results.totalCost.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`cashSellingPrice_${i}`].value = results.cashSellingPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`targetSellingPrice_${i}`].value = results.targetSellingPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`discountedSellingPrice2_${i}`].value = results.discountedSellingPrice2.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`discountedSellingPrice1_${i}`].value = results.discountedSellingPrice1.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`rrp_${i}`].value = results.rrp.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`rrpGross_${i}`].value = results.rrpGross.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`result_${i}`].value = results.result.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     });
