@@ -181,7 +181,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // FORMAT PRICES (2 decimal places)
 
     document.addEventListener("blur", (e) => {
-    if (e.target.name && (e.target.readOnly || e.target.name.startsWith("price_"))) {
+    if (e.target.name && (e.target.readOnly 
+            || e.target.name.startsWith("price_")
+            || e.target.name.startsWith("invoiceCharges_")
+            || e.target.name.startsWith("procurementCosts_")
+        )) {
         const val = parseFloat(e.target.value);
         if (!isNaN(val)) {
             e.target.value = val.toFixed(2);
@@ -344,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
             form.elements[`discountedPrice3_${i}`].value = results.discountedPrice3.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`targetPrice_${i}`].value = results.targetPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`cashPrice_${i}`].value = results.cashPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            form.elements[`costPrice_${i}`].value = results.cashPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            form.elements[`costPrice_${i}`].value = results.costPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`totalCost_${i}`].value = results.totalCost.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`cashSellingPrice_${i}`].value = results.cashSellingPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             form.elements[`targetSellingPrice_${i}`].value = results.targetSellingPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -357,7 +361,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(results)
-    function calculatePrice(quantity, price, vatRatePurchase, supplierDiscount1, supplierDiscount2, supplierDiscount3, invoiceCharges, supplierCashDiscount){
+    function calculatePrice(
+        quantity, 
+        price, 
+        vatRatePurchase, 
+        supplierDiscount1, 
+        supplierDiscount2, 
+        supplierDiscount3, 
+        invoiceCharges, 
+        supplierCashDiscount,
+        procurementCosts,
+        overheadRate,
+        profitRate,
+        customerCashDiscountRate,
+        customerDiscount3,
+        customerDiscount2,
+        customerDiscount1,
+        vatRate,
+    ){
         let subtotal = price;
         results.purchasePriceGross = subtotal*quantity;
         console.log(results.purchasePriceGross);
@@ -386,7 +407,37 @@ document.addEventListener("DOMContentLoaded", () => {
         results.cashPrice = subtotal*quantity;
         console.log(results.cashPrice);
 
+        subtotal = calculateCostPrice(subtotal, procurementCosts, quantity);
+        results.costPrice= subtotal*quantity;
+        console.log(results.costPrice);
 
+        subtotal = calculateSellingPrices(subtotal, overheadRate);
+        results.totalCost= subtotal*quantity;
+        console.log(results.totalCost);
+        
+        subtotal = calculateSellingPrices(subtotal, profitRate);        
+        results.cashSellingPrice= subtotal*quantity;
+        console.log(results.cashSellingPrice);
+        
+        subtotal = calculateSellingPrices(subtotal, customerCashDiscountRate);        
+        results.targetSellingPrice= subtotal*quantity;
+        console.log(results.targetSellingPrice);
+        
+        subtotal = calculateSellingPrices(subtotal, customerDiscount3);        
+        results.discountedSellingPrice2= subtotal*quantity;
+        console.log(results.discountedSellingPrice2);
+        
+        subtotal = calculateSellingPrices(subtotal, customerDiscount2);        
+        results.discountedSellingPrice1= subtotal*quantity;
+        console.log(results.discountedSellingPrice1);
+        
+        subtotal = calculateSellingPrices(subtotal, customerDiscount1);         
+        results.rrp= subtotal*quantity;
+        console.log(results.rrp);
+          
+        subtotal = calculateVat(subtotal, vatRate)
+        results.rrpGross= subtotal*quantity;
+        console.log(results.rrpGross);
 
         results.result = subtotal*quantity;
         console.log(results.result);
