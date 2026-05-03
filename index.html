@@ -61,17 +61,17 @@
         <aside
             id="drawer"
             class="fixed z-50 bg-surface border border-border shadow-lg
-                transition-transform duration-300 ease-in-out
-        
-                /* Mobile: full-width panel from top */
-                top-[57px] left-0 right-0
-                -translate-y-[calc(100%+57px)]
-                rounded-b-xl
-        
-                /* Desktop: right sidebar */
-                lg:top-0 lg:left-auto lg:right-0 lg:bottom-0
-                lg:w-[400px] lg:rounded-none lg:rounded-l-xl
-                lg:translate-y-0 lg:translate-x-full"
+            transition-transform duration-300 ease-in-out
+
+            top-[57px] left-0 right-0
+            -translate-y-[calc(100%+57px)]
+            max-h-[calc(100vh-57px)]
+            rounded-b-xl overflow-y-auto
+
+            lg:top-0 lg:left-auto lg:right-0 lg:bottom-0
+            lg:w-[400px] lg:rounded-none lg:rounded-l-xl
+            lg:translate-y-0 lg:translate-x-full
+            lg:max-h-none"
         >
             <!-- Drawer header -->
             <div class="px-4 py-3 border-b border-border flex items-center justify-between">

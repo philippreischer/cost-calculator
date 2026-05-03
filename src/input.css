@@ -9,3 +9,12 @@
   --color-text:    #111827;
 }
 
+#drawer {
+    max-height: calc(100vh - 57px);
+}
+
+@media (min-width: 1024px) {
+    #drawer {
+        max-height: 100vh;
+    }
+}

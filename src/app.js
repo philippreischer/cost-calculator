@@ -381,66 +381,50 @@ document.addEventListener("DOMContentLoaded", () => {
     ){
         let subtotal = price;
         results.purchasePriceGross = subtotal*quantity;
-        console.log(results.purchasePriceGross);
 
         subtotal = calculatePurchasePrice(subtotal, vatRatePurchase);
         results.purchasePrice = subtotal*quantity;
-        console.log(results.purchasePrice);
 
         subtotal = calculateSupplierPrices(subtotal, supplierDiscount1);
         results.discountedPrice1 = subtotal*quantity;
-        console.log(results.discountedPrice1);
 
         subtotal = calculateSupplierPrices(subtotal, supplierDiscount2);
         results.discountedPrice2 = subtotal*quantity;
-        console.log(results.discountedPrice2);
 
         subtotal = calculateSupplierPrices(subtotal, supplierDiscount3);
         results.discountedPrice3 = subtotal*quantity;
-        console.log(results.discountedPrice3);
         
         subtotal = calculateCostPrice(subtotal, invoiceCharges, quantity);
         results.targetPrice = subtotal*quantity;   
-        console.log(results.targetPrice);
 
         subtotal = calculateSupplierPrices(subtotal, supplierCashDiscount);
         results.cashPrice = subtotal*quantity;
-        console.log(results.cashPrice);
 
         subtotal = calculateCostPrice(subtotal, procurementCosts, quantity);
         results.costPrice= subtotal*quantity;
-        console.log(results.costPrice);
 
         subtotal = calculateSellingPrices(subtotal, overheadRate);
         results.totalCost= subtotal*quantity;
-        console.log(results.totalCost);
         
         subtotal = calculateSellingPrices(subtotal, profitRate);        
         results.cashSellingPrice= subtotal*quantity;
-        console.log(results.cashSellingPrice);
         
         subtotal = calculateSellingPrices(subtotal, customerCashDiscountRate);        
         results.targetSellingPrice= subtotal*quantity;
-        console.log(results.targetSellingPrice);
         
         subtotal = calculateSellingPrices(subtotal, customerDiscount3);        
         results.discountedSellingPrice2= subtotal*quantity;
-        console.log(results.discountedSellingPrice2);
         
         subtotal = calculateSellingPrices(subtotal, customerDiscount2);        
         results.discountedSellingPrice1= subtotal*quantity;
-        console.log(results.discountedSellingPrice1);
         
         subtotal = calculateSellingPrices(subtotal, customerDiscount1);         
         results.rrp= subtotal*quantity;
-        console.log(results.rrp);
           
         subtotal = calculateVat(subtotal, vatRate)
         results.rrpGross= subtotal*quantity;
-        console.log(results.rrpGross);
 
         results.result = subtotal*quantity;
-        console.log(results.result);
     }
 
     function calculatePurchasePrice(price, vatRate){ 
