@@ -8,7 +8,7 @@
 |---|---|
 | ![Drawer](./docs/screenshot-drawer.png) | ![Mobile](./docs/screenshot-mobile.png) |
 
-🔗 **Live Demo:** [PLACEHOLDER - I will add this later]
+🔗 **Live Demo:** https://philippreischer.github.io/cost-calculator/
 
 ---
 
