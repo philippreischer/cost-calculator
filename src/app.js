@@ -320,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
             customerDiscount1:  parseFloat(form.elements[`customerDiscount1_${i}`].value) || 0,
             vatRate:  parseFloat(form.elements[`vatRate_${i}`].value) || 0,
             };
-            console.log(columns[i]);
             
             calculatePrice(
                 columns[i].quantity, 
@@ -360,7 +359,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    console.log(results)
     function calculatePrice(
         quantity, 
         price, 
