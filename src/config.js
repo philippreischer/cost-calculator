@@ -17,7 +17,7 @@
         },
         {
         id: "price",
-        label: "Preis (€)",
+        label: "Preis (Stk. €)",
         name: "price",
         type: "number",
         step: "0.01",
